@@ -1,0 +1,13 @@
+name: 'Labs Verify'
+description: 'Verifies readme for each lab'
+inputs:
+  root-lab-path:  # id of input
+    description: 'director of lab collection'
+    required: true
+    default: 'labs'
+outputs:
+  verified: # id of output
+    description: 'All lab folders have readme'
+runs:
+  using: 'node16'
+  main: 'index.js'

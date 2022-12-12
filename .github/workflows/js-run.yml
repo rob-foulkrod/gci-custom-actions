@@ -1,0 +1,16 @@
+on: [push, workflow_dispatch]
+
+jobs:
+  js-example-run:
+    runs-on: ubuntu-latest
+    name: Verify labs have a readme
+    steps:
+      - uses: actions/checkout@v3
+      - name: Verify README files
+        id: verify
+        uses: ./.github/actions/js-one
+        with:
+          root-lab-path: ./labs
+      # Use the output from the `verify` step
+      - name: Is everything verified?
+        run: echo "The varified value was ${{ steps.verify.outputs.verified }}"
