@@ -22,6 +22,9 @@ async function run() {
             console.log(`readme ${readmePath} | exists ${readmeExists}`);
             if (!readmeExists) {
 
+                
+                const myToken = core.getSecret('GITHUB_TOKEN');
+                const octokit = github.getOctokit(myToken)
                 const newIssue = await octokit.rest.issues.create({
                   ...context.repo,
                   title: 'Missing README in Lab: ' + path_string,
