@@ -21,6 +21,14 @@ try {
         const readmeExists = fs.existsSync(readmePath);
         console.log(`readme ${readmePath} | exists ${readmeExists}`);
         if (!readmeExists) {
+            
+            const newIssue = await octokit.rest.issues.create({
+              ...context.repo,
+              title: 'Missing README in Lab: ' + path_string,
+              body: "All labs should contain a README explaining its use"
+            });
+            
+            
             core.setOutput("verified", false);
             core.setFailed(`${path_string} does not have a README.md`);
         }
