@@ -19,7 +19,7 @@ try {
         console.log(`path_string ${path_string} | directory ${isDirectory}`);
         const readmePath = path_string + "/README.md"
         const readmeExists = fs.existsSync(readmePath);
-        console.log(`readme ${readmePath} | exists${readmeExists}`);
+        console.log(`readme ${readmePath} | exists ${readmeExists}`);
         if (!readmeExists) {
             core.setOutput("verified", false);
             core.setFailed(`${path_string} does not have a README.md`);
