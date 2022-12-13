@@ -1,6 +1,4 @@
-﻿using CommandLine;
-
-namespace DotNet.GitHubAction;
+﻿namespace docker_one;
 
 public class ActionInputs
 {
@@ -9,7 +7,8 @@ public class ActionInputs
 
     public ActionInputs()
     {
-        if (Environment.GetEnvironmentVariable("GREETINGS") is { Length: > 0 } greetings)
+        if (Environment.GetEnvironmentVariable(
+            "GREETINGS") is { Length: > 0 } greetings)
         {
             Console.WriteLine(greetings);
         }

@@ -1,12 +1,10 @@
 # The name of the work flow. Badges will use this name
-name: '.NET code metrics'
+name: 'Fake .NET code metrics'
 
 on:
   push:
     branches: [ main, play ]
-    paths:
-    - 'github-actions/DotNet.GitHubAction/**'               # run on all changes to this dir
-    - '!github-actions/DotNet.GitHubAction/CODE_METRICS.md' # ignore this file
+
   workflow_dispatch:
     inputs:
       reason:
@@ -30,21 +28,14 @@ jobs:
       run: |
         echo 'Reason: ${{ github.event.inputs.reason }}'
 
-    - name: .NET code metrics
-      id: dotnet-code-metrics
-      uses: dotnet/samples/github-actions/DotNet.GitHubAction@main
+    - name: Calculating fake .NET code metrics
+      id: dotnet-docker-example
+      uses: ./.github/actions/docker-one
       env:
         GREETINGS: 'Hello, .NET developers!' # ${{ secrets.GITHUB_TOKEN }}
       with:
         owner: ${{ github.repository_owner }}
         name: ${{ github.repository }}
         branch: ${{ github.ref }}
-        dir: ${{ './github-actions/DotNet.GitHubAction' }}
+        dir: ${{ './labs' }}
       
-    - name: Create pull request
-      uses: peter-evans/create-pull-request@v4
-      if: ${{ steps.dotnet-code-metrics.outputs.updated-metrics }} == 'true'
-      with:
-        title: '${{ steps.dotnet-code-metrics.outputs.summary-title }}'
-        body: '${{ steps.dotnet-code-metrics.outputs.summary-details }}'
-        commit-message: '.NET code metrics, automated pull request.'
