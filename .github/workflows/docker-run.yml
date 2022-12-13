@@ -32,7 +32,7 @@ jobs:
       id: dotnet-docker-example
       uses: ./.github/actions/docker-one
       env:
-        GREETINGS: 'Hello, .NET developers!' # ${{ secrets.GITHUB_TOKEN }}
+        GREETINGS: 'Scanning Everything!!! (not really)' # ${{ secrets.GITHUB_TOKEN }}
       with:
         owner: ${{ github.repository_owner }}
         name: ${{ github.repository }}
