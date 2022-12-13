@@ -1,0 +1,41 @@
+# The name of the work flow. Badges will use this name
+name: 'Fake .NET code metrics'
+
+on:
+  push:
+    branches: [ main, play ]
+
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: 'The reason for running the workflow'
+        required: true
+        default: 'Manual run'
+
+jobs:
+  analysis:
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: 'Print manual run reason'
+      if: ${{ github.event_name == 'workflow_dispatch' }}
+      run: |
+        echo 'Reason: ${{ github.event.inputs.reason }}'
+
+    - name: Calculating fake .NET code metrics
+      id: dotnet-docker-example
+      uses: ./.github/actions/docker-one
+      env:
+        GREETINGS: 'Scanning Everything!!! (not really)' # ${{ secrets.GITHUB_TOKEN }}
+      with:
+        owner: ${{ github.repository_owner }}
+        name: ${{ github.repository }}
+        branch: ${{ github.ref }}
+        dir: ${{ './labs' }}
+      
